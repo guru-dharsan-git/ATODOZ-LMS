@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,24 +37,24 @@ export function LoginForm() {
         },
       });
     });
-    }
-    async function signInWithEmail() {
-        startEmailTransition(async () => {
-            await authClient.emailOtp.sendVerificationOtp({
-                email,
-                type: "sign-in",
-                fetchOptions: {
-                    onSuccess: () => {
-                        toast.success("Successfully sent verification email!");
-                        router.push(`/verify-request?email=${email}`);
-                    },
-                    onError: (error) => {
-                        toast.error("Error sending email");
-                    },
-                },
-            });
-        });
-    }
+  }
+  async function signInWithEmail() {
+    startEmailTransition(async () => {
+      await authClient.emailOtp.sendVerificationOtp({
+        email,
+        type: "sign-in",
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Successfully sent verification email!");
+            router.push(`/verify-request?email=${email}`);
+          },
+          onError: (error) => {
+            toast.error("Error sending email");
+          },
+        },
+      });
+    });
+  }
   return (
     <Card>
       <CardHeader>
@@ -93,23 +93,29 @@ export function LoginForm() {
         <div className="grid gap-3">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="my@example.com" required />
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="my@example.com"
+              required
+            />
           </div>
-                  <Button onClick={signInWithEmail} disabled={emailPending}>
-                      {emailPending ? (
-                          <>
-                              <Loader className="size-4 animate-spin" />
-                              <span>Loading...</span>
-                          </>
-                      ) : (
-                              <>
-                                  <Send className="size-4"/>
-                                  <span>Continue with Email</span>
-                              </>
-                      )}
-                  </Button>
+          <Button onClick={signInWithEmail} disabled={emailPending}>
+            {emailPending ? (
+              <>
+                <Loader className="size-4 animate-spin" />
+                <span>Loading...</span>
+              </>
+            ) : (
+              <>
+                <Send className="size-4" />
+                <span>Continue with Email</span>
+              </>
+            )}
+          </Button>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
